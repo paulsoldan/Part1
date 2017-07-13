@@ -1,4 +1,8 @@
-<?php include ("session.php") ?>
+<?php 
+include ("session.php");
+if(!empty($_SESSION['username'])){
+	header('Location: admin.php');
+} ?>
 <!DOCTYPE html>
 <html>
 <head>

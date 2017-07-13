@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,8 +34,8 @@ session_start();
 								<div align="left">
                                		<h1><?php echo $row["title"]; ?></h1> 
                                		<h4><?php echo $row["description"]; ?></h4> 
-                               		<h2><?php echo $row["price"]; ?> lei</h2>   
-                               		<input type="submit" value="Delete to Cart" />  
+                               		<h2><?php echo $row["price"]; ?> £</h2>   
+                               		<input type="submit" name="deleteCart" value="Delete to Cart" />  
                                	</div>
                                	<br><br>
                           </div>  
