@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include("connection_db.php");
 $stmt = mysqli_stmt_init($db);
 
@@ -11,6 +10,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])){
 else{
 	$query = "SELECT * FROM products where id not in (?)"; 
 	$eNum = implode(',',$_SESSION['cart']);
+	echo $eNum;
 	if(!mysqli_stmt_prepare($stmt, $query))
 	{
 	    print "Failed to prepare statement\n";
@@ -41,7 +41,7 @@ $result = mysqli_stmt_get_result($stmt);
 				<div>  
                     <form method="POST" action="cart.php?id=<?php echo $row["id"]; ?>">  
                         <div>  
-                            <img src="img/<?php echo $row["id"]; ?>.jpg" class="img-responsive" align = "left" height="200" width="300"> 								
+                            <img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="200" width="300"> 								
                                	<h1 name="title"><?php echo $row["title"]; ?></h1> 
                                	<h4><?php echo $row["description"]; ?></h4> 
                                	<h2><?php echo $row["price"]; ?> lei</h2>   

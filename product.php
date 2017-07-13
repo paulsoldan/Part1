@@ -4,12 +4,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['update'])) {
         // update
-    } else {
+
+    } 
+    if (isset($_POST['delete'])) {
         // delete
+        
     }
 }
 //$method=$_GET['']
  ?>
+
+
+ <?php 
+
+  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<input type="text" name="price">
 	<br>
 	<input type="submit" name="save" value="Save">
+	<input type="submit" name="update" value="Update">
 </form>
 </body>
 </html>

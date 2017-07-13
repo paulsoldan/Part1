@@ -1,21 +1,3 @@
-<?php 
-/*session_start();
-$_SESSION['cart'] = array();
-include("connection_db.php");
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])){
-	$query = "SELECT * FROM products";
-}
-else{
-	$eNum = implode(',',$_SESSION['cart']);
-	$query = "SELECT * FROM products where id not in ($eNum) ";
-}
-mysqli_query($db, $query) or die('Error querying database.');
-$result = mysqli_query($db, $query);
-mysqli_close($db);*/
-?>
-
-
-
 <?php
 include("connection_db.php");
 $msg="";
@@ -25,7 +7,9 @@ $msg="";
 		$title=$_POST['title'];
 		$description=$_POST['description'];
 		$price=$_POST['price'];
-		
+		if (file_exists("img/" .$image)) {
+        	$image=$title . $image;
+    	}
 		/*echo $target ,'<br>';
 		echo $image ,'<br>';
 		echo $title ,'<br>';
@@ -46,6 +30,7 @@ $msg="";
 		//mysqli_query($db, $query) or die('Error querying database.');
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
+		echo $image;
 		if(move_uploaded_file($_FILES['image']['tmp_name'], $target))
 		{
 			$msg="Image uploaded successfully";
@@ -56,7 +41,68 @@ $msg="";
 		}
 		echo $msg;
 	}
+	//unset($_POST['save']);
+	//var_dump(unset($_POST['save']));
 ?>
+
+
+
+<?php 
+if(isset($_POST['delete'])){
+	$id=$_GET['id'];
+	//echo $id;
+
+	//delete file from hdd
+	$stmt=mysqli_stmt_init($db);
+	$query="SELECT * FROM products WHERE id = ?";
+	if(!mysqli_stmt_prepare($stmt, $query))
+	{
+	    print "Failed to prepare statement\n";
+	}
+	else
+	{
+		mysqli_stmt_bind_param($stmt, 's', $id);
+	}
+	mysqli_stmt_execute($stmt);
+	$result=mysqli_stmt_get_result($stmt);
+	while ($row = mysqli_fetch_array($result)){
+		$image=$row['image'];
+	}
+    if (file_exists("img/" .$image)) {
+        unlink("img/" . $image);
+    } 
+    else 
+    {
+    	echo "File not found";
+        // File not found.
+    }
+
+	//delete from database
+	$stmt=mysqli_stmt_init($db);
+	$query="DELETE FROM products WHERE id=?";
+	if(!mysqli_stmt_prepare($stmt, $query))
+	{
+	    print "Failed to prepare statement\n";
+	}
+	else
+	{
+		mysqli_stmt_bind_param($stmt, 's', $id);
+	}
+	mysqli_stmt_execute($stmt);
+}
+ ?>
+
+<?php 
+	
+ ?>
+
+<?php 
+	$stm = mysqli_stmt_init($db);
+	$query="SELECT * FROM products";
+	mysqli_stmt_prepare($stm, $query);
+	mysqli_stmt_execute($stm);
+	$result=mysqli_stmt_get_result($stm);
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,26 +114,31 @@ $msg="";
 	<input type="submit" name="update" id="update" value="Add product"/>
 </form>
 <?php while ($row = mysqli_fetch_array($result)): ?>
-<form name="form" id="form" action="product.php?id=<?php echo $row["id"]; ?>" method="POST" enctype="multipart/form-data">
-     	<div>  
-            <img src="img/<?php echo $row["id"]; ?>.jpg" class="img-responsive" align = "left" height="200" width="300"> 								
+    <div>  
+     	<form name="form" id="form" action="admin.php?id=<?php echo $row["id"]; ?>" method="POST" enctype="multipart/form-data">
+            <img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="200" width="300"> 								
             <h1 name="title"><?=$row["title"]; ?></h1> 
             <h4><?=$row["description"]; ?></h4> 
-            <h2><?=$row["price"]; ?> lei</h2>   
-            <table>
+            <h2><?=$row["price"]; ?> lei</h2> 
+            <br>                                 	
+        </form>
+        <table>
+        	<form method="POST" action="product.php">
     			<tr>
           			<!-- Some input fields -->
         			<input type="submit" name="update" id="update" value="Update" />
     			</tr>
+    		</form>
+    		<form method="POST" action="admin.php?id=<?php echo $row["id"]; ?>">
     			<tr>
           			<!-- Some more input fields -->
         			<input type="submit" name="delete" id="delete" value="Delete" />
     			</tr>
-			</table>                               	
-            <br><br>
-        </div> 
-    </form>
+    		</form>
+		</table>
+    </div>
     <?php endwhile; ?>
+    <br><a href="logout.php" id="log-out">Logout</a>
 </body>
 </html>
 

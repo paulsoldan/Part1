@@ -29,7 +29,7 @@ session_start();
 				<div>  
                      <form method="post" action="index.php?id=<?php echo $row["id"]; ?>">  
                           <div>  
-                               	<img src="img/<?php echo $row["id"]; ?>.jpg" class="img-responsive" align = "left" height="200" width="300"> 
+                               	<img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="200" width="300"> 
 								<div align="left">
                                		<h1><?php echo $row["title"]; ?></h1> 
                                		<h4><?php echo $row["description"]; ?></h4> 
