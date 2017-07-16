@@ -101,5 +101,6 @@ if(isset($_POST['update']) && isset($_FILES['image']['name'])){
 	{
 		$msg="There was a problem uploaded image";
 	}
+	header("Location: admin.php");
 }
  ?>

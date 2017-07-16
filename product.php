@@ -1,21 +1,3 @@
-<?php 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //something posted
-
-    if (isset($_POST['update'])) {
-        // update
-
-    } 
-    if (isset($_POST['delete'])) {
-        // delete
-        
-    }
-}
-//$method=$_GET['']
- ?>
-
-
- 
 <!DOCTYPE html>
 <html>
 <head>

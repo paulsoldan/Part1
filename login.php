@@ -12,7 +12,7 @@ if(!empty($_SESSION['username'])){
 	<h2>Login:</h2>    
     <form name="login" method = "POST">
         <label for="username">
-            Username</label> <input type="username" id="usename" name="username" required="required"><br><br>
+            Username</label> <input type="username" id="username" name="username" required="required"><br><br>
         <label for="password">
             Password:</label> <input type="password" id="password" name="password" required="required"><br><br>
         <button type = "submit" name="submit">Login</button><br><br>       
