@@ -27,6 +27,9 @@ $result = mysqli_stmt_get_result($stmt);
 </head>
 <body>
 	<h2>Cart:</h2>
+    <form method="post" action="index.php">
+        <input type="submit" value="Products" />
+    </form>
 	<ul>
 		<div>
 			<?php while ($row = mysqli_fetch_array($result)) :                   
