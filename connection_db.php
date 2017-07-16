@@ -1,3 +1,4 @@
 <?php
-	$db = mysqli_connect('localhost','root','soldan1234','p1')
+    include("C:/xampp\htdocs\db_connection\config.php");
+	$db = mysqli_connect($host,$user,$password,$database)
 	or die('Error connecting to MySQL server.');
