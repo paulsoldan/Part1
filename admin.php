@@ -4,101 +4,8 @@ if(!isset($_SESSION['username'])){
 	header('Location: login.php');
 }
 include("connection_db.php");
-$msg="";
-	if(isset($_POST['save'])){
-		$target="img/".basename($_FILES['image']['name']);
-		$image=$_FILES['image']['name'];
-		$title=$_POST['title'];
-		$description=$_POST['description'];
-		$price=$_POST['price'];
-		if (file_exists("img/" .$image)) {
-        	$image=$title . $image;
-    	}
-		/*echo $target ,'<br>';
-		echo $image ,'<br>';
-		echo $title ,'<br>';
-		echo $description ,'<br>';
-		echo $price ,'<br>';*/
-
-		$stmt = mysqli_stmt_init($db);
-		//$query="INSERT INTO products (image, title, description, price) values ('$image', '$title', '$description', '$price')";
-		$query="INSERT INTO products (image, title, description, price) values (?, ?, ?, ?)";
-		if(!mysqli_stmt_prepare($stmt, $query))
-		{
-	    	print "Failed to prepare statement\n";
-		}
-		else
-		{
-			mysqli_stmt_bind_param($stmt, 'sssd', $image, $title, $description, $price);
-		}
-		//mysqli_query($db, $query) or die('Error querying database.');
-		mysqli_stmt_execute($stmt);
-		$result = mysqli_stmt_get_result($stmt);
-		echo $image;
-		if(move_uploaded_file($_FILES['image']['tmp_name'], $target))
-		{
-			$msg="Image uploaded successfully";
-		}
-		else
-		{
-			$msg="There was a problem uploaded image";
-		}
-		echo $msg;
-	}
-	//unset($_POST['save']);
-	//var_dump(unset($_POST['save']));
 ?>
 
-
-
-<?php 
-if(isset($_POST['delete'])){
-	$id=$_GET['id'];
-	//echo $id;
-
-	//delete file from hdd
-	$stmt=mysqli_stmt_init($db);
-	$query="SELECT * FROM products WHERE id = ?";
-	if(!mysqli_stmt_prepare($stmt, $query))
-	{
-	    print "Failed to prepare statement\n";
-	}
-	else
-	{
-		mysqli_stmt_bind_param($stmt, 's', $id);
-	}
-	mysqli_stmt_execute($stmt);
-	$result=mysqli_stmt_get_result($stmt);
-	while ($row = mysqli_fetch_array($result)){
-		$image=$row['image'];
-	}
-    if (file_exists("img/" .$image)) {
-        unlink("img/" . $image);
-    } 
-    else 
-    {
-    	echo "File not found";
-        // File not found.
-    }
-
-	//delete from database
-	$stmt=mysqli_stmt_init($db);
-	$query="DELETE FROM products WHERE id=?";
-	if(!mysqli_stmt_prepare($stmt, $query))
-	{
-	    print "Failed to prepare statement\n";
-	}
-	else
-	{
-		mysqli_stmt_bind_param($stmt, 's', $id);
-	}
-	mysqli_stmt_execute($stmt);
-}
- ?>
-
-<?php 
-	
- ?>
 
 <?php 
 	$stm = mysqli_stmt_init($db);
@@ -133,7 +40,7 @@ if(isset($_POST['delete'])){
         			<input type="submit" name="update" id="update" value="Update" />
     			</tr>
     		</form>
-    		<form method="POST" action="admin.php?id=<?php echo $row["id"]; ?>">
+    		<form method="POST" action="delete.php?id=<?php echo $row["id"]; ?>">
     			<tr>
           			<!-- Some more input fields -->
         			<input type="submit" name="delete" id="delete" value="Delete" />
