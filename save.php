@@ -9,7 +9,7 @@ if(isset($_POST['save']) && isset($_FILES['image']['name'])){
 	$title=$_POST['title'];
 	$description=$_POST['description'];
 	$price=$_POST['price'];
-	if (file_exists("img/" .$image)) {
+	while(file_exists("img/" .$image)) {
 		$image = "1" . $image;
 	}
 	/*echo $target ,'<br>';

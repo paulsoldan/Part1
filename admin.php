@@ -27,11 +27,11 @@ include("connection_db.php");
 <?php while ($row = mysqli_fetch_array($result)): ?>
     <div>  
      	<form name="form" id="form" action="admin.php?id=<?php echo $row["id"]; ?>" method="POST" enctype="multipart/form-data">
-            <img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="200" width="300"> 								
+            <img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="300" width="300"> 								
             <h1 name="title"><?=$row["title"]; ?></h1> 
             <h4><?=$row["description"]; ?></h4> 
             <h2><?=$row["price"]; ?> £</h2> 
-            <br>                                 	
+            <br>                                	
         </form>
         <table>
         	<form method="POST" action="product.php?id=<?php echo $row["id"]; ?>">
@@ -47,6 +47,7 @@ include("connection_db.php");
     			</tr>
     		</form>
 		</table>
+        <br><br><br><br><br><br>
     </div>
     <?php endwhile; ?>
     <br><a href="logout.php" id="log-out">Logout</a>

@@ -39,7 +39,7 @@ $result = mysqli_stmt_get_result($stmt);
 				    <div>  
                         <form method="post" action="index.php?id=<?php echo $row["id"]; ?>">  
                             <div>  
-                               	<img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="200" width="300"> 
+                               	<img src="img/<?php echo $row["image"]; ?>" class="img-responsive" align = "left" height="300" width="300"> 
 								<div align="left">
                                		<h1><?php echo $row["title"]; ?></h1> 
                                		<h4><?php echo $row["description"]; ?></h4> 
@@ -48,7 +48,8 @@ $result = mysqli_stmt_get_result($stmt);
                                	</div>
                                	<br><br>
                             </div>  
-                        </form>  
+                        </form>
+                        <br><br><br><br><br>
                     </div>  
 			       <?php
                     }
@@ -56,4 +57,18 @@ $result = mysqli_stmt_get_result($stmt);
             ?>
 		</div>
 	</ul>
+    <br><br>
+    <form method="post" action="index.php">
+        <div>
+            <input type="email" name="email" placeholder="Email:">
+        </div>
+        <br>
+        <div>
+            <input rows="4" cols="50" name="comment"  placeholder="Enter text here..." />
+        </div>
+        <br>
+        <div>
+            <input type="submit" name="send" value="Send">
+        </div>
+    </form>
 </body>
