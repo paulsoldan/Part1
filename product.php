@@ -1,27 +1,23 @@
 <?php 
-if (isset($_POST['update']))
-{
-    include("connection_db.php");
+require_once("connection_db.php");
+
+if (isset($_POST['update'])):
     $id=$_GET['id'];
-    //echo $id;
 
     $stmt=mysqli_stmt_init($db);
     $query="SELECT * FROM products WHERE id = ?";
-    if(!mysqli_stmt_prepare($stmt, $query))
-    {
+    if(!mysqli_stmt_prepare($stmt, $query)):
         print "Failed to prepare statement\n";
-    }
-    else
-    {
+    else:
         mysqli_stmt_bind_param($stmt, 's', $id);
-    }
+    endif;
     mysqli_stmt_execute($stmt);
     $result=mysqli_stmt_get_result($stmt);
-    while ($row = mysqli_fetch_array($result)){
+    while ($row = mysqli_fetch_array($result)):
         $title = $row["title"];
         $description = $row["description"];
         $price = $row["price"]; 
-    }
+    endwhile;
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,8 +43,7 @@ if (isset($_POST['update']))
             <input type="submit" name="update" value="Update">
         </form>
     <?php
-    }
-    else{
+    else:
         ?>
         <form method="POST" action="save.php?id=<?php echo $_GET['id']; ?>" enctype="multipart/form-data">
             <h5>Image</h5>
@@ -67,7 +62,7 @@ if (isset($_POST['update']))
             <input type="submit" name="save" value="Save">
         </form>
     <?php
-    }
+    endif;
 ?>
 </body>
 </html>

@@ -1,18 +1,15 @@
 <?php
-session_start();
-if(!isset($_SESSION['username'])){
-	header('Location: login.php');
-}
-include("connection_db.php");
-?>
+require_once("connection_db.php");
 
-
-<?php 
-	$stm = mysqli_stmt_init($db);
-	$query="SELECT * FROM products";
-	mysqli_stmt_prepare($stm, $query);
-	mysqli_stmt_execute($stm);
-	$result=mysqli_stmt_get_result($stm);
+if(!isset($_SESSION['username'])):
+    header('Location: login.php');
+    exit();
+endif;
+$stm = mysqli_stmt_init($db);
+$query="SELECT * FROM products";
+mysqli_stmt_prepare($stm, $query);
+mysqli_stmt_execute($stm);
+$result=mysqli_stmt_get_result($stm);
  ?>
 <!DOCTYPE html>
 <html>

@@ -1,8 +1,21 @@
 <?php 
-include ("session.php");
-if(!empty($_SESSION['username'])){
+require_once("connection_db.php");
+require_once("config.php");
+
+if(empty($_POST['username']) || empty($_POST['password'])):
+    echo 'Please Login!';
+else:
+    if($_POST['username'] == $login_username && $_POST['password']==$login_password):
+        $_SESSION['username'] = $_POST['username'];
+        header('Location: admin.php');
+        exit();
+    endif;
+endif;
+if(!empty($_SESSION['username'])):
 	header('Location: admin.php');
-} ?>
+    exit();
+endif;
+?>
 <!DOCTYPE html>
 <html>
 <head>
