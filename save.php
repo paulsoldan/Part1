@@ -31,7 +31,6 @@ if(isset($_POST['save']) && isset($_FILES['image']['name'])):
 	header("Location: admin.php");
     exit();
 endif;
-
 if(isset($_POST['update']) && isset($_FILES['image']['name'])){
 	$id=$_GET['id'];
 	$stma=mysqli_stmt_init($db);
@@ -78,4 +77,3 @@ if(isset($_POST['update']) && isset($_FILES['image']['name'])){
 	header("Location: admin.php");
     exit();
 }
- ?>

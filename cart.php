@@ -32,26 +32,24 @@ if(isset($_POST['send'])):
             array_push($products,$row['title']);
             array_push($products,$row['description']);
             array_push($products,$row['price']);
-            array_push($products,"/////////////////");
+            array_push($products,"------------------------------------------------");
         endif;
     endwhile;
-    $prod="";
+    $body = "Comment: " . $messageGuest . "<br>" . "+++++++++++++++++++++++++++++" . "<br>" ."Products in cart: " . "<br>" . "+++++++++++++++++++++++++++++" . "<br>";
     foreach($products as $item):
-        $prod=$prod . $item . "-->";
+        $body=$body . $item . "<br>";
     endforeach;
     require_once('PHPMailer-master/PHPMailerAutoload.php');
     $mail             = new PHPMailer();
-    //$body             = eregi_replace("[\]",'',$body);
     $mail->IsSMTP(); // telling the class to use SMTP                   // enables SMTP debug information (for testing)
-    $mail->SMTPSecure = "ssl";                                            // 1 = errors and messages
+    $mail->SMTPSecure = "ssl";             //                               // 1 = errors and messages
     $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
     $mail->Port       = 465;                                           // 2 = messages only
     $mail->SMTPAuth   = true;                  // enable SMTP authentication
     $mail->Username   = $userEmail;  // GMAIL username
     $mail->Password   = $passEmail;            // GMAIL password
     $mail->SetFrom($setFrom, 'PRSPS');
-    $mail->Subject    = "Products in Cart";
-    $body = "Comment: " . $messageGuest . '. ' . "Products in cart: " . $prod;
+    $mail->Subject    = "Products in Cart"; 
     $mail->MsgHTML($body);
     $address = $email;
     $mail->AddAddress($address, "user2");
@@ -62,7 +60,6 @@ if(isset($_POST['send'])):
       echo "Message sent!";
     endif;
 endif;
-
 $query = "SELECT * FROM products";
 $stmt = mysqli_stmt_init($db);
 mysqli_stmt_prepare($stmt, $query);

@@ -35,4 +35,3 @@ if(isset($_POST['delete'])):
     header("Location: admin.php");
     exit();
 endif;
- ?>
